@@ -1,0 +1,88 @@
+/* 禁止选中文本 */
+* {
+  -moz-user-select: none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* 开始节点样式 */
+.node-begin > .el-card__body {
+  padding: 0;
+  height: 40px;
+}
+.node-begin .el-tag{
+  font-size: 20px;
+  height: 50px;
+  width: 200px;
+  line-height: 50px;
+}
+.node-begin .el-tag::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+.node-begin .el-tag i.node-icon{
+  float: left;
+  line-height: 50px;
+}
+.node-begin .el-tag i.el-tag__close {
+  float: right;
+}
+/* 文本节点样式 */
+.node-text > .el-card__body {
+  padding: 0;
+  height: 40px;
+}
+.node-text .el-tag{
+  font-size: 20px;
+  height: 50px;
+  width: 200px;
+  line-height: 50px;
+}
+.node-text .el-tag::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+.node-text .el-tag i.el-tag__close {
+  float: right;
+}
+/* 圆形节点样式 */
+.node-circle > .el-card__body {
+  padding-top: 55px;
+  height: 40px;
+}
+.node-circle .el-tag{
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+}
+.node-circle .el-tag::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+.node-circle .el-tag i.el-tag__close {
+  float: right;
+  top: 0;
+}
+/* 内容区域样式 */
+.main {
+  position: relative;
+  z-index: 0;
+}
+.main canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width:100%;
+  height: 695px;
+  z-index: -1;
+}
+.node {
+  position: absolute;
+  left: 100px;
+  top: 100px;
+}
