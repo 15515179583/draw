@@ -7,6 +7,10 @@
   -ms-user-select: none;
   user-select: none;
 }
+.node-text, .node-begin {
+  width:200px;
+  height:50px;
+}
 /* 开始节点样式 */
 .node-begin > .el-card__body {
   padding: 0;
@@ -50,6 +54,11 @@
   float: right;
 }
 /* 圆形节点样式 */
+.node-circle {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
 .node-circle > .el-card__body {
   padding-top: 55px;
   height: 40px;
@@ -70,7 +79,7 @@
 }
 /* 内容区域样式 */
 .main {
-  position: relative;
+  position: absolute;
   z-index: 0;
 }
 .main canvas {
@@ -85,4 +94,10 @@
   position: absolute;
   left: 100px;
   top: 100px;
+}
+.node:hover {
+  cursor: move;
+}
+.el-main {
+  position: relative;
 }

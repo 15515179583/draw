@@ -1,15 +1,68 @@
 <template>
-  <el-card class="box-card node-circle node" style="width:150px; height:150px;border-radius: 50%">
-    <el-tag closable type="warning">
-      <span>圆形节点</span>
-    </el-tag>
-  </el-card>
+  <div draggable="true" @dragstart="start(item, $event)" @dragend.stop="end(item, $event)" @drag="$emit('get-node-info', setInfo(item, $event))" class="draw-circle-node">
+    <el-card class="box-card node-circle node" :style="item.style">
+      <el-tag closable type="warning" @close="$emit('remove-node', item)">
+        <span>{{item.name}}</span>
+      </el-tag>
+    </el-card>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'DrawCircleNode'
-  // props: ['style']
+  name: 'DrawCircleNode',
+  props: ['item'],
+  data: function () {
+    return {
+      baseX: '',
+      baseY: '',
+      beginX: '',
+      beginY: '',
+      moveX: '',
+      moveY: '',
+      endX: '',
+      endY: '',
+      itemBaseX: '',
+      itemBaseY: '',
+      flag: true
+    }
+  },
+  methods: {
+    start (item, ev) {
+      this.beginX = ev.screenX
+      this.beginY = ev.screenY
+      if (this.flag) {
+        this.baseX = ev.screenX
+        this.baseY = ev.screenY
+        this.itemBaseX = item.left
+        this.itemBaseY = item.top
+        this.flag = false
+      }
+    },
+    move (item, ev) {
+      this.moveX = ev.screenX - this.beginX
+      this.moveY = ev.screenY - this.beginY
+      this.endX = ev.screenX - this.baseX
+      this.endY = ev.screenY - this.baseY
+      this.start(item, ev)
+    },
+    end (item, ev) {
+      const x = parseInt(ev.screenX) - parseInt(this.baseX)
+      const y = parseInt(ev.screenY) - parseInt(this.baseY)
+      item.left = parseInt(this.itemBaseX) + x
+      item.top = parseInt(this.itemBaseY) + y
+      item.style.left = item.left + '' + 'px'
+      item.style.top = item.top + '' + 'px'
+    },
+    setInfo: function (item, e) {
+      this.move(item, e)
+      item.left = parseInt(item.left) + parseInt(this.moveX)
+      item.top = parseInt(item.top) + parseInt(this.moveY)
+      item.style.left = item.left + '' + 'px'
+      item.style.top = item.top + '' + 'px'
+      return item
+    }
+  }
 }
 </script>
 

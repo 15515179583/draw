@@ -1,8 +1,8 @@
 <template>
 <div class="main">
-  <DrawBeginNode></DrawBeginNode>
-  <DrawTextNode :key="item.id" v-for="item in draw.coms"></DrawTextNode>
-  <DrawCircleNode></DrawCircleNode>
+  <DrawBeginNode :key="item.id + 'begin'" v-for="item in draw.coms.begin" :item="item"  @get-node-info="$emit('get-node-info', $event)" @remove-node="$emit('remove-node', {type:'begin',delItem:item})"></DrawBeginNode>
+  <DrawTextNode :key="item.id + 'text'" v-for="item in draw.coms.text" :item="item"  @get-node-info="$emit('get-node-info', $event)" @remove-node="$emit('remove-node', {type:'text',delItem:item})"></DrawTextNode>
+  <DrawCircleNode :key="item.id + 'circle'" v-for="item in draw.coms.circle" :item="item"  @get-node-info="$emit('get-node-info', $event)" @remove-node="$emit('remove-node', {type:'circle',delItem:item})"></DrawCircleNode>
   <canvas></canvas>
 </div>
 </template>
@@ -18,7 +18,17 @@ export default {
     DrawTextNode,
     DrawCircleNode
   },
-  props: ['draw']
+  props: ['draw'],
+  data: function () {
+    return {
+      info: JSON
+    }
+  },
+  methods: {
+    showInfo (nodeInfo) {
+      this.info = nodeInfo
+    }
+  }
 }
 </script>
 

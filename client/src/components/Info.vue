@@ -21,7 +21,7 @@
                     <el-input v-model="info.icon"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="$emit('save-node-info', info)">保存</el-button>
+                    <el-button type="primary" @click="$emit('save-node-info', info)" :disabled="saveFlag">保存</el-button>
                     <el-button>重置</el-button>
                 </el-form-item>
             </el-form>
@@ -32,7 +32,7 @@
 <script>
 export default {
   name: 'List',
-  props: ['info']
+  props: ['info', 'saveFlag']
 }
 </script>
 
