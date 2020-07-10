@@ -45,7 +45,7 @@ export default {
         text: '',
         begin: '',
         circle: '',
-        solids: ''
+        lines: ''
       },
       info: JSON,
       beginNum: '',
@@ -74,7 +74,7 @@ export default {
         text: [],
         begin: [],
         circle: [],
-        solids: []
+        lines: []
       }
     },
     saveDraw () {
