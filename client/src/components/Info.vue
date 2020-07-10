@@ -22,7 +22,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="$emit('save-node-info', info)" :disabled="saveFlag">保存</el-button>
-                    <el-button>重置</el-button>
+                    <el-button :disabled="saveFlag">重置</el-button>
                 </el-form-item>
             </el-form>
         </el-main>

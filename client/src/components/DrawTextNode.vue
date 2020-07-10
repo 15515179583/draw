@@ -1,7 +1,8 @@
 <template>
-  <div draggable="true" @dragstart="start(item, $event)" @dragend.stop="end(item, $event)" @drag="$emit('get-node-info', setInfo(item, $event))" class="draw-text-node">
+  <div draggable="true" @dragstart="start(item, $event)" @dragend.stop="end(item, $event)" @drag="$emit('get-node-info', setInfo(item, $event))" @click="$emit('get-node-info', setBaseInfo(item, $event))" class="draw-text-node">
     <el-card class="box-card node-text node" :style="item.style" draggable="true">
       <el-tag closable type="info" @close="$emit('remove-node', item)">
+        <i class="node-icon" :class="item.icon"></i>
         <span>{{item.name}}</span>
       </el-tag>
     </el-card>
@@ -62,8 +63,8 @@ export default {
       item.style.top = item.top + '' + 'px'
       return item
     },
-    removeTab: function () {
-      console.log(123)
+    setBaseInfo: function (item, e) {
+      return item
     }
   }
 }

@@ -50,6 +50,10 @@
   display: block;
   clear: both;
 }
+.node-text .el-tag i.node-icon{
+  float: left;
+  line-height: 50px;
+}
 .node-text .el-tag i.el-tag__close {
   float: right;
 }

@@ -10,9 +10,8 @@ module.exports = {
         })
     },
     saveDraw : (req,res,next) => {
-        let {content} = req.data.content
-        console.log(content)
-        Draw.getDraw(content).then(results =>{
+        let content = req.body.content
+        Draw.saveDraw(content).then(results =>{
             req.affectedRows = results
             next()
         }).catch(err =>{
