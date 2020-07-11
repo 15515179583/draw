@@ -12,6 +12,9 @@
   height:50px;
 }
 /* 开始节点样式 */
+.node-begin {
+  border-radius: 30px
+}
 .node-begin > .el-card__body {
   padding: 0;
   height: 40px;

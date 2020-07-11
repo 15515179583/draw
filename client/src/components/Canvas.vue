@@ -80,39 +80,6 @@ export default {
   },
   mounted () {
     this.initDraw()
-    this.drawArrow({
-      ctx: this.context,
-      fromX: 100,
-      fromY: 100,
-      toX: 50,
-      toY: 50,
-      controlX: 10,
-      controlY: 40,
-      headlen: 10,
-      type: 'curve',
-      color: '#000'
-    })
-    this.drawArrow({
-      fromX: 200,
-      fromY: 300,
-      toX: 300,
-      toY: 200,
-      controlX: 250,
-      controlY: 600,
-      headlen: 10,
-      type: 'curve',
-      color: '#000'
-    })
-    this.drawArrow({
-      ctx: this.context,
-      fromX: 350,
-      fromY: 350,
-      toX: 300,
-      toY: 300,
-      headlen: 10,
-      type: 'broken',
-      color: '#000'
-    })
   }
 }
 </script>

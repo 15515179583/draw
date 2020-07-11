@@ -5,7 +5,7 @@
         <el-alert title="线条信息" type="success" :closable="false" center></el-alert>
     </el-col>
     <el-col :span="4">
-      <el-select v-model="lineRules.type">
+      <el-select v-model="type">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -71,16 +71,59 @@ export default {
       }, {
         value: 'broken',
         label: '折线箭头'
-      }]
+      }],
+      type: String,
+      color: String,
+      width: Number,
+      theta: Number,
+      headlen: Number,
+      controlX: Number,
+      controlY: Number
     }
   },
   watch: {
-    lineRules: function () {
-      console.log(this.lineRules)
+    type: function () {
+      this.lineRules.type = this.type
+      this.$emit('updata-lineRules', this.lineRules)
+    },
+    color: function () {
+      this.lineRules.color = this.color
+      this.$emit('updata-lineRules', this.lineRules)
     },
     width: function () {
-      console.log(this.lineRules)
+      this.lineRules.width = this.width
+      this.$emit('updata-lineRules', this.lineRules)
+    },
+    theta: function () {
+      this.lineRules.theta = this.theta
+      this.$emit('updata-lineRules', this.lineRules)
+    },
+    headlen: function () {
+      this.lineRules.headlen = this.headlen
+      this.$emit('updata-lineRules', this.lineRules)
+    },
+    controlX: function () {
+      this.lineRules.controlX = this.controlX
+      this.$emit('updata-lineRules', this.lineRules)
+    },
+    controlY: function () {
+      this.lineRules.controlY = this.controlY
+      this.$emit('updata-lineRules', this.lineRules)
     }
+  },
+  methods: {
+    init () {
+      this.type = this.lineRules.type
+      this.color = this.lineRules.color
+      this.width = this.lineRules.width
+      this.theta = this.lineRules.theta
+      this.headlen = this.lineRules.headlen
+      this.controlX = this.lineRules.controlX
+      this.controlY = this.lineRules.controlY
+    }
+  },
+  mounted () {
+    this.init()
   }
 }
 </script>

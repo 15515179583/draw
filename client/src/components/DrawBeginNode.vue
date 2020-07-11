@@ -1,5 +1,5 @@
 <template>
-  <div draggable="true" @dragstart="start(item, $event)" @dragend.stop="end(item, $event)" @drag="$emit('get-node-info', setInfo(item, $event))" @click="$emit('get-node-info', setBaseInfo(item, $event))" class="draw-begin-node">
+  <div draggable="true" @dragstart="start(item, $event)" @dragend.stop="$emit('get-node-info', end(item, $event))" @drag="$emit('get-node-info', setInfo(item, $event))" @click="$emit('get-node-info', setBaseInfo(item, $event))" class="draw-begin-node">
     <el-card class="box-card node-begin node" :style="item.style"  >
       <el-tag closable @close="$emit('remove-node', item)">
         <i class="node-icon" :class="item.icon"></i>
@@ -55,6 +55,7 @@ export default {
       item.top = parseInt(this.itemBaseY) + y
       item.style.left = item.left + '' + 'px'
       item.style.top = item.top + '' + 'px'
+      return item
     },
     setInfo: function (item, e) {
       this.move(item, e)

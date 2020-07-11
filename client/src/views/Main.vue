@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <LineControl :lineRules="lineRules"></LineControl>
+    <LineControl :lineRules="lineRules" @updata-lineRules="updataLinerules($event)"></LineControl>
     <el-container style="height: 700px; border: 1px solid #eee">
       <el-container>
         <el-aside width="230px" style="height: 700px; border: 1px solid #000;">
@@ -55,9 +55,9 @@ export default {
         theta: 30,
         width: 1,
         headlen: 10,
-        color: '#153785',
-        controlX: 50,
-        controlY: 50
+        color: '#225618',
+        controlX: 150,
+        controlY: 550
       },
       info: JSON,
       beginNum: '',
@@ -108,6 +108,16 @@ export default {
     },
     setNodeInfo (item) {
       this.info = item
+      this.draw.lines = this.draw.lines.map((line) => {
+        if (line.beginNode === item) {
+          line.fromX = item.type === 'circle' ? (item.left + 75) : (item.left + 100)
+          line.fromY = item.type === 'circle' ? (item.top + 75) : (item.top + 25)
+        } else if (line.endNode === item) {
+          line.toX = item.left
+          line.toY = item.top
+        }
+        return line
+      })
       if (item.updata) {
         this.saveFlag = false
       } else {
@@ -146,6 +156,9 @@ export default {
           return item !== val.delItem
         })
       }
+      this.draw.lines = this.draw.lines.filter((item) => {
+        return item.beginNode !== val.delItem && item.endNode !== val.delItem
+      })
       this.$message({
         message: '节点删除成功',
         type: 'success'
@@ -176,8 +189,8 @@ export default {
         var line = {
           beginNode: this.lineBeginNode,
           endNode: item,
-          fromX: this.lineBeginNode.type === 'begin' || this.lineBeginNode.type === 'text' ? (this.lineBeginNode.left + 100) : (this.lineBeginNode.left + 75),
-          fromY: this.lineBeginNode.type === 'begin' || this.lineBeginNode.type === 'text' ? (this.lineBeginNode.top + 25) : (this.lineBeginNode.top + 75),
+          fromX: this.lineBeginNode.type === 'circle' ? (this.lineBeginNode.left + 75) : (this.lineBeginNode.left + 100),
+          fromY: this.lineBeginNode.type === 'circle' ? (this.lineBeginNode.top + 75) : (this.lineBeginNode.top + 25),
           toX: item.left,
           toY: item.type === 'circle' ? (item.top + 75) : (item.top + 25),
           ...this.lineRules
@@ -189,6 +202,9 @@ export default {
         this.lineBeginNode = item
         this.lineFlag = true
       }
+    },
+    updataLinerules (lineRules) {
+      // console.log(lineRules)
     }
   },
   mounted: function () {
