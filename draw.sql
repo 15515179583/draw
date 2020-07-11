@@ -65,7 +65,7 @@ CREATE TABLE `draw` (
 
 LOCK TABLES `draw` WRITE;
 /*!40000 ALTER TABLE `draw` DISABLE KEYS */;
-INSERT INTO `draw` VALUES (1,'');
+INSERT INTO `draw` VALUES (1,'{"text":[],"begin":[],"circle":[],"lines":[]}');
 /*!40000 ALTER TABLE `draw` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
