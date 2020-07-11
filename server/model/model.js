@@ -6,8 +6,8 @@ module.exports = class Model{
         Model.conn = mysql.createConnection({
             host:'127.0.0.1',
             user:'root',
-            password:'root',
-            database:'draw'
+            password:'smile',
+            database:'darw'
         })
         Model.conn.connect(err =>{
             if(err) {

@@ -109,10 +109,10 @@ export default {
     setNodeInfo (item) {
       this.info = item
       this.draw.lines = this.draw.lines.map((line) => {
-        if (line.beginNode === item) {
+        if (line.beginNode.id === item.id && line.beginNode.type === item.type) {
           line.fromX = item.type === 'circle' ? (item.left + 75) : (item.left + 100)
           line.fromY = item.type === 'circle' ? (item.top + 75) : (item.top + 25)
-        } else if (line.endNode === item) {
+        } else if (line.endNode.id === item.id && line.endNode.type === item.type) {
           line.toX = item.left
           line.toY = item.top
         }
@@ -157,7 +157,7 @@ export default {
         })
       }
       this.draw.lines = this.draw.lines.filter((item) => {
-        return item.beginNode !== val.delItem && item.endNode !== val.delItem
+        return !(item.beginNode.id === val.delItem.id && item.beginNode.type === val.delItem.type) && !(item.endNode.id === val.delItem.id && item.endNode.type === val.delItem.type)
       })
       this.$message({
         message: '节点删除成功',
