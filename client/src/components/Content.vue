@@ -1,8 +1,8 @@
 <template>
 <div>
-  <DrawBeginNode :key="item.id + 'begin'" v-for="item in draw.begin" :item="item"  @get-node-info="$emit('get-node-info', $event)" @remove-node="$emit('remove-node', {type:'begin',delItem:item})"></DrawBeginNode>
-  <DrawTextNode :key="item.id + 'text'" v-for="item in draw.text" :item="item"  @get-node-info="$emit('get-node-info', $event)" @remove-node="$emit('remove-node', {type:'text',delItem:item})"></DrawTextNode>
-  <DrawCircleNode :key="item.id + 'circle'" v-for="item in draw.circle" :item="item"  @get-node-info="$emit('get-node-info', $event)" @remove-node="$emit('remove-node', {type:'circle',delItem:item})"></DrawCircleNode>
+  <DrawBeginNode :key="item.id + 'begin'" v-for="item in draw.begin" :item="item"  @get-node-info="$emit('get-node-info', $event)" @remove-node="$emit('remove-node', {type:'begin',delItem:item})" @line-node="$emit('line-node', item)"></DrawBeginNode>
+  <DrawTextNode :key="item.id + 'text'" v-for="item in draw.text" :item="item"  @get-node-info="$emit('get-node-info', $event)" @remove-node="$emit('remove-node', {type:'text',delItem:item})" @line-node="$emit('line-node', item)"></DrawTextNode>
+  <DrawCircleNode :key="item.id + 'circle'" v-for="item in draw.circle" :item="item"  @get-node-info="$emit('get-node-info', $event)" @remove-node="$emit('remove-node', {type:'circle',delItem:item})" @line-node="$emit('line-node', item)"></DrawCircleNode>
   <Canvas :lines="draw.lines"></Canvas>
 </div>
 </template>

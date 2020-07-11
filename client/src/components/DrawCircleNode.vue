@@ -3,6 +3,7 @@
     <el-card class="box-card node-circle node" :style="item.style">
       <el-tag closable type="warning" @close="$emit('remove-node', item)">
         <span>{{item.name}}</span>
+        <el-button class="line-btn line-btn-circle" type="success" circle size="mini" @click="$emit('line-node', item)"></el-button>
       </el-tag>
     </el-card>
   </div>

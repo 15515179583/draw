@@ -1,12 +1,13 @@
 <template>
   <div class="wrap">
+    <LineControl :lineRules="lineRules"></LineControl>
     <el-container style="height: 700px; border: 1px solid #eee">
       <el-container>
         <el-aside width="230px" style="height: 700px; border: 1px solid #000;">
           <List :list="list" @get-node-info="setNodeInfo($event)" @create-node="createNode($event)"></List>
         </el-aside>
         <el-main style="height: 700px; border: 1px solid #000; padding:0; margin:0 20px">
-          <Content :draw="draw" :info="info" @get-node-info="setNodeInfo($event)" @remove-node="removeNode($event)"></Content>
+          <Content :draw="draw" :info="info" @get-node-info="setNodeInfo($event)" @remove-node="removeNode($event)" @line-node="setLine($event)"></Content>
         </el-main>
         <el-aside style="height: 700px; border: 1px solid #000;">
           <Info :info="info" :saveFlag="saveFlag" @save-node-info="saveNodeInfo($event)"></Info>
@@ -31,27 +32,40 @@
 import List from '@/components/List.vue'
 import Content from '@/components/Content.vue'
 import Info from '@/components/Info.vue'
+import LineControl from '@/components/LineControl.vue'
 export default {
   name: 'Main',
   components: {
     List,
     Content,
-    Info
+    Info,
+    LineControl
   },
   data: function () {
     return {
       list: Array,
       draw: {
-        text: '',
-        begin: '',
-        circle: '',
-        lines: ''
+        text: Array,
+        begin: Array,
+        circle: Array,
+        lines: Array
+      },
+      lineRules: {
+        type: 'broken',
+        theta: 30,
+        width: 1,
+        headlen: 10,
+        color: '#153785',
+        controlX: 50,
+        controlY: 50
       },
       info: JSON,
       beginNum: '',
       textNum: '',
       circleNum: '',
-      saveFlag: true
+      saveFlag: true,
+      lineFlag: false,
+      lineBeginNode: JSON
     }
   },
   methods: {
@@ -103,7 +117,6 @@ export default {
     saveNodeInfo (node) {
       var params = new URLSearchParams()
       node = JSON.stringify(node)
-      console.log(node)
       params.append('component', node)
       this.$axios.post('component/updata', params).then(res => {
         if (res.data.code === 1) {
@@ -157,6 +170,25 @@ export default {
         message: '节点创建成功',
         type: 'success'
       })
+    },
+    setLine (item) {
+      if (this.lineFlag && item !== this.lineBeginNode) {
+        var line = {
+          beginNode: this.lineBeginNode,
+          endNode: item,
+          fromX: this.lineBeginNode.type === 'begin' || this.lineBeginNode.type === 'text' ? (this.lineBeginNode.left + 100) : (this.lineBeginNode.left + 75),
+          fromY: this.lineBeginNode.type === 'begin' || this.lineBeginNode.type === 'text' ? (this.lineBeginNode.top + 25) : (this.lineBeginNode.top + 75),
+          toX: item.left,
+          toY: item.type === 'circle' ? (item.top + 75) : (item.top + 25),
+          ...this.lineRules
+        }
+        this.draw.lines.push(line)
+        console.log(line)
+        this.lineFlag = false
+      } else {
+        this.lineBeginNode = item
+        this.lineFlag = true
+      }
     }
   },
   mounted: function () {

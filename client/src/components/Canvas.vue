@@ -8,55 +8,32 @@ export default {
   props: ['lines'],
   data: function () {
     return {
-      flag: 1,
-      context: {},
-      lineWidth: 0.1,
-      lineColor: 'black',
-      canvasMoveUse: false,
-      beginPoint: {
-        x: '',
-        y: ''
-      },
-      endPoint: {
-        x: '',
-        y: ''
-      },
-      controlPoint: {
-        x: '',
-        y: ''
-      }
+      context: {}
     }
   },
   methods: {
     initDraw () {
       const canvas = document.getElementById('canvas')
       this.context = canvas.getContext('2d')
-      // this.context.lineWidth = this.lineWidth
-      // this.context.strokeStyle = this.lineColor
-    },
-    getLines (lines) {
-      console.log(lines)
-    },
-    drawSolid (beginPoint, endPoint) {
-      this.context.moveTo(beginPoint.x, beginPoint.y)
-      this.context.lineTo(endPoint.x, endPoint.y)
-      this.context.stroke()
     },
     drawArrow (arrow) {
-      var ctx = arrow.ctx
+      var ctx = typeof (arrow.ctx) !== 'undefined' ? arrow.ctx : this.context
       var fromX = arrow.fromX
       var fromY = arrow.fromY
       var toX = arrow.toX
       var toY = arrow.toY
-      var controlX = typeof (arrow.controlX) !== 'undefined' ? arrow.controlX : 'undefined'
-      var controlY = typeof (arrow.controlY) !== 'undefined' ? arrow.controlY : 'undefined'
+      var controlX = typeof (arrow.controlX) !== 'undefined' ? arrow.controlX : arrow.fromX
+      var controlY = typeof (arrow.controlY) !== 'undefined' ? arrow.controlY : arrow.fromY
       var theta = typeof (arrow.theta) !== 'undefined' ? arrow.theta : 30
       var headlen = typeof (arrow.headlen) !== 'undefined' ? arrow.headlen : 10
       var width = typeof (arrow.width) !== 'undefined' ? arrow.width : 1
       var color = typeof (arrow.color) !== 'undefined' ? arrow.color : '#000'
       var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI
-      if (controlX !== 'undefined') {
+      var type = typeof (arrow.type) !== 'undefined' ? arrow.type : 'line'
+      if (type === 'curve') {
         angle = Math.atan2(controlY - toY, controlX - toX) * 180 / Math.PI
+      } else if (type === 'broken') {
+        angle = Math.atan2(toY - toY, fromX - toX) * 180 / Math.PI
       }
       var angle1 = (angle + theta) * Math.PI / 180
       var angle2 = (angle - theta) * Math.PI / 180
@@ -68,11 +45,15 @@ export default {
       ctx.beginPath()
       var arrowX = fromX - topX
       var arrowY = fromY - topY
-      if (controlX === 'undefined' && controlY === 'undefined') {
+      if (type === 'line') {
         ctx.moveTo(arrowX, arrowY)
         ctx.moveTo(fromX, fromY)
         ctx.lineTo(toX, toY)
-      } else {
+      } else if (type === 'broken') {
+        ctx.moveTo(fromX, fromY)
+        ctx.lineTo(fromX, toY)
+        ctx.lineTo(toX, toY)
+      } else if (type === 'curve') {
         ctx.moveTo(fromX, fromY)
         ctx.quadraticCurveTo(controlX, controlY, toX, toY)
       }
@@ -89,29 +70,47 @@ export default {
       ctx.restore()
     }
   },
+  watch: {
+    lines: function () {
+      this.context.clearRect(0, 0, 2000, 700)
+      this.lines.forEach(line => {
+        this.drawArrow(line)
+      })
+    }
+  },
   mounted () {
     this.initDraw()
-    // this.drawSolid({ x: 0, y: 0 }, { x: 100, y: 100 })
-    // this.drawArrow(this.context, 0, 0, 400, 100, 30, 30, 1, '#f36')
     this.drawArrow({
       ctx: this.context,
-      fromX: 0,
-      fromY: 0,
-      toX: 200,
+      fromX: 100,
+      fromY: 100,
+      toX: 50,
+      toY: 50,
+      controlX: 10,
+      controlY: 40,
+      headlen: 10,
+      type: 'curve',
+      color: '#000'
+    })
+    this.drawArrow({
+      fromX: 200,
+      fromY: 300,
+      toX: 300,
       toY: 200,
-      headlen: 20,
-      theta: 30,
-      color: '#751236'
+      controlX: 250,
+      controlY: 600,
+      headlen: 10,
+      type: 'curve',
+      color: '#000'
     })
     this.drawArrow({
       ctx: this.context,
-      fromX: 0,
-      fromY: 0,
-      toX: 10,
-      toY: 200,
-      controlX: 100,
-      controlY: 100,
+      fromX: 350,
+      fromY: 350,
+      toX: 300,
+      toY: 300,
       headlen: 10,
+      type: 'broken',
       color: '#000'
     })
   }

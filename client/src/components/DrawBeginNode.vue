@@ -4,6 +4,7 @@
       <el-tag closable @close="$emit('remove-node', item)">
         <i class="node-icon" :class="item.icon"></i>
         <span>{{item.name}}</span>
+        <el-button class="line-btn" type="success" circle size="mini" @click="$emit('line-node', item)"></el-button>
       </el-tag>
     </el-card>
   </div>

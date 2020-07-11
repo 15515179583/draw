@@ -6,9 +6,7 @@ import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import './assets/css/base.css'
-
 axios.defaults.baseURL = '/api/'
-
 Vue.prototype.$axios = axios
 Vue.use(ElementUi)
 
