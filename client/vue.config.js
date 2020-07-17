@@ -1,10 +1,13 @@
+const path = require('path')
+
 module.exports = {
+    publicPath: './',
     devServer: {
       port: 80,
       host: '127.0.0.1',
-      proxy: {
+      proxyTable: {
           '/api': {
-            target: 'http://localhost:3000',
+            target: 'http://121.36.20.234:3000/',
             changeOrigin: true,
             pathRewrite: {
               '^/api': ''
