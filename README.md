@@ -3,7 +3,7 @@
 - 前台采用 vue + element
 - 后端采用 nodejs
 - 数据库采用 MySQL
- 
+![http://smilestation.info/upload/d4ca33decd93b81696b157744369f67f.png](http://smilestation.info/upload/d4ca33decd93b81696b157744369f67f.png)
 ## 文件夹说明
 - server 后端文件夹
 - client 前端文件夹
