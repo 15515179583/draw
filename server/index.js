@@ -11,6 +11,6 @@ app.use("/draw",require('./router/draw'))
 
 app.get("/",(req,res)=>{
     res.send("ok")
-})
+}) 
 
 app.listen(3000)
